@@ -1,7 +1,6 @@
 const ATJAUNOT = 1000;
-const VERSIJA = "0.51"
-var vards = "Viesis"
-
+const VERSIJA = "0.51";
+var vards = "Viesis";
 
 /*
 Klase, kas satur visu chata saturu, struktūru un metainformāciju
@@ -16,7 +15,12 @@ class Chats {
     // pārbaudām vai ir vispār kāda jau esoša ziņa
     // ja nav, parādām paziņojumu (tikai lokāli!)
     if (dati.chats.length == 0) {
-      this.zinjas = [new Zinja("Pārlūkprogramma", "Čatā pašlaik ziņu nav, uzrakstiet kaut ko!")];
+      this.zinjas = [
+        new Zinja(
+          "Pārlūkprogramma",
+          "Čatā pašlaik ziņu nav, uzrakstiet kaut ko!"
+        )
+      ];
     }
 
     // no atsūtītajiem datiem izveidojam masīvu ar zinju objektiem
@@ -35,7 +39,7 @@ class Chats {
     const chatUL = document.getElementById("chats");
     // novaacam ieprieksheejo saturu
     while (chatUL.firstChild) {
-        chatUL.firstChild.remove();
+      chatUL.firstChild.remove();
     }
     // pievienojam visas zinjas
     for (const zinja of this.zinjas) {
@@ -65,87 +69,84 @@ class Zinja {
     let teksts = "";
     let newLI = document.createElement("li");
     newLI.className = LIclassName;
-    let newDiv = document.createElement("div"); 
+    let newDiv = document.createElement("div");
     newDiv.className = newDivclassName;
     if (this.adresats == "visi") {
-      teksts = this.vards + ": " + this.zinja;      
+      teksts = this.vards + ": " + this.zinja;
     } else {
       teksts = this.vards + "->" + this.adresats + ": " + this.zinja;
       newDiv.className = newDivclassName + " privata-zinja";
     }
-    let newContent = document.createTextNode(teksts); 
-    newLI.appendChild(newDiv); 
-    newDiv.appendChild(newContent); 
+    let newContent = document.createTextNode(teksts);
+    newLI.appendChild(newDiv);
+    newDiv.appendChild(newContent);
     return newLI;
   }
 }
-
 
 /*
 Ielādē tērzēšanas datus no servera
 Uzstāda laiku pēc kāda atkārtoti izsaukt šo pašu funkciju
 */
 async function lasiChatu() {
-    const atbilde = await fetch('/chats/lasi/' + vards);
-    const datuObjekts = await atbilde.json();
-    let dati = new Chats(datuObjekts);
-    dati.raadiChataRindas();
-    await new Promise(resolve => setTimeout(resolve, ATJAUNOT));
-    await lasiChatu();
+  const atbilde = await fetch("/chats/lasi/" + vards);
+  const datuObjekts = await atbilde.json();
+  let dati = new Chats(datuObjekts);
+  dati.raadiChataRindas();
+  await new Promise(resolve => setTimeout(resolve, ATJAUNOT));
+  await lasiChatu();
 }
-
 
 /*
 Publicē tērzēšanas ziņas datus uz serveri
 */
 async function suutiZinju() {
-    // Nolasa ievades lauka saturu
-    let zinjasElements = document.getElementById("zinja");
-    let zinja = zinjasElements.value;
-    let rindas_objekts;
+  // Nolasa ievades lauka saturu
+  let zinjasElements = document.getElementById("zinja");
+  let zinja = zinjasElements.value;
+  let rindas_objekts;
 
-    // pārbaudām vai ir vispār kaut kas ierakstīts
-    if (zinja.length > 0) {
-
-        if (zinja.startsWith("/")) {
-          rindas_objekts = saprotiKomandu(zinja);
-        } else {
-          rindas_objekts = new Zinja(vards, zinja)
-        }
-
-        // izdzēš ievades lauku
-        zinjasElements.value = "";
-
-        const atbilde = await fetch('/chats/suuti', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "chats": rindas_objekts })
-        });
-        const datuObjekts = await atbilde.json();
-
-        // parāda jauno chata saturu
-        let dati = new Chats(datuObjekts);
-        dati.raadiChataRindas();
+  // pārbaudām vai ir vispār kaut kas ierakstīts
+  if (zinja.length > 0) {
+    if (zinja.startsWith("/")) {
+      rindas_objekts = saprotiKomandu(zinja);
     } else {
-        console.log("Tukšu ziņu nesūtām uz serveri")
+      rindas_objekts = new Zinja(vards, zinja);
     }
-}
 
+    // izdzēš ievades lauku
+    zinjasElements.value = "";
+
+    const atbilde = await fetch("/chats/suuti", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ chats: rindas_objekts })
+    });
+    const datuObjekts = await atbilde.json();
+
+    // parāda jauno chata saturu
+    let dati = new Chats(datuObjekts);
+    dati.raadiChataRindas();
+  } else {
+    console.log("Tukšu ziņu nesūtām uz serveri");
+  }
+}
 
 function saprotiKomandu(ievades_teksts) {
   let ievades_vardi = ievades_teksts.split(" ");
   let komanda = ievades_vardi[0];
   let zinja = "";
   // izveido jaunu chata rindinju no vārda, ziņas utml datiem
-  let chata_rinda = new Zinja(vards, zinja)
+  let chata_rinda = new Zinja(vards, zinja);
 
   switch (komanda) {
     case "/vards":
     case "/vaards":
       if (ievades_vardi.length < 2) {
-        chata_rinda.zinja = "Norādi jauno vārdu, piemēram: /vards MansJaunaisVards";
+        chata_rinda.zinja =
+          "Norādi jauno vārdu, piemēram: /vards MansJaunaisVards";
       } else {
         chata_rinda.zinja = uzstadiVaardu(ievades_vardi[1]);
       }
@@ -157,7 +158,8 @@ function saprotiKomandu(ievades_teksts) {
     case "/vau":
     case "/msg":
       if (ievades_vardi.length < 3) {
-        chata_rinda.zinja = "Lai nosūtītu privātu VAU, ierakstiet adresāta vārdu un ziņu formā /vau Adresats Zinja";  
+        chata_rinda.zinja =
+          "Lai nosūtītu privātu VAU, ierakstiet adresāta vārdu un ziņu formā /vau Adresats Zinja";
       } else {
         chata_rinda.adresats = ievades_vardi[1];
         // izmetam pirmos divus vaardus, jo tie ir komanda un adresats
@@ -177,7 +179,6 @@ function saprotiKomandu(ievades_teksts) {
   return chata_rinda;
 }
 
-
 function uzstadiVaardu(jaunaisVards) {
   let vecaisVards = vards;
   vards = jaunaisVards;
@@ -185,11 +186,9 @@ function uzstadiVaardu(jaunaisVards) {
   return teksts;
 }
 
-
 function paradiPalidzibu() {
-  return 'Pieejamās komandas : "/vards JaunaisVards", "/palidziba", "/versija"'
+  return 'Pieejamās komandas : "/vards JaunaisVards", "/palidziba", "/versija"';
 }
-
 
 // Ērtības funkcionalitāte
 var versijasLauks = document.getElementById("versija");
