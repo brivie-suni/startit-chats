@@ -1,4 +1,4 @@
-const ATJAUNOT = 1000;
+const ATJAUNOT = 100000;
 const VERSIJA = "0.51"
 var vards = "Viesis"
 
@@ -56,26 +56,33 @@ class Zinja {
   constructor(vards, zinja, laiks="") {
     this.vards = vards;
     this.zinja = zinja;
+    this.adresats = "visi"; // nedrīkst izvēlteis šadu vārdu
     this.laiks = laiks;
-    this.adresats = "visi"; // nedrīkst izvēlties šādu vārdu
   }
 
   formateRindu() {
     const LIclassName = "left clearfix";
     const newDivclassName = "chat-body clearfix";
-    
     let teksts = "";
     let newLI = document.createElement("li");
     newLI.className = LIclassName;
     let newDiv = document.createElement("div"); 
     newDiv.className = newDivclassName;
     if (this.adresats == "visi") {
-      teksts = this.laiks + "~" + this.vards + ": " + this.zinja;      
+      teksts = this.vards + ": " + this.zinja;      
     } else {
-      teksts = this.laiks + "~" + this.vards + "->" + this.adresats + ": " + this.zinja;
+      teksts = this.vards + "->" + this.adresats + ": " + this.zinja;
       newDiv.className = newDivclassName + " privata-zinja";
     }
-    let newContent = document.createTextNode(teksts); 
+    let newContent = ""
+    if (this.zinja.startsWith("http")) {
+      newContent = document.createElement("img");
+      newContent.src = this.zinja;
+      newContent.width = '400';
+      newContent.height = '200';
+    } else {
+      newContent = document.createTextNode(teksts);
+    }
     newLI.appendChild(newDiv); 
     newDiv.appendChild(newContent); 
     return newLI;
@@ -111,7 +118,11 @@ async function suutiZinju() {
 
         if (zinja.startsWith("/")) {
           rindas_objekts = saprotiKomandu(zinja);
-        } else {
+        } else if (zinja.startsWith("+")) {
+          rindas_objekts = uztaisiBildi(zinja)
+        }
+        
+        else {
           rindas_objekts = new Zinja(vards, zinja)
         }
 
@@ -136,6 +147,28 @@ async function suutiZinju() {
 }
 
 
+function uztaisiBildi(ievades_teksts) {
+  let ievades_vardi = ievades_teksts.split(" ");
+  let komanda = ievades_vardi[0].substr(1);
+  let zinja = "";
+  let chata_rinda = new Zinja(vards, zinja)
+  switch (komanda) { 
+    case "suns":
+    case "dog":
+      chata_rinda.zinja = "https://placedog.net/400/200";
+      break;
+    case "kaķis":
+    case "kakis":
+      chata_rinda.zinja = "http://placekitten.com/400/200";
+      break;
+    case "kucens":
+    default:
+      chata_rinda.zinja = "http://place-puppy.com/400x200";
+  }
+  return chata_rinda;
+}
+
+
 function saprotiKomandu(ievades_teksts) {
   let ievades_vardi = ievades_teksts.split(" ");
   let komanda = ievades_vardi[0];
@@ -151,9 +184,6 @@ function saprotiKomandu(ievades_teksts) {
       } else {
         chata_rinda.zinja = uzstadiVaardu(ievades_vardi[1]);
       }
-      break;
-    case "/uptime":
-      servera_uptime();
       break;
     case "/versija":
     case "/v":
@@ -182,12 +212,6 @@ function saprotiKomandu(ievades_teksts) {
   return chata_rinda;
 }
 
-async function servera_uptime() {
-  const atbilde = await fetch('/uptime');
-  uptaims = await atbilde.text();
-  var uptimeLauks = document.getElementById("uptime");
-  uptimeLauks.innerHTML = "Servera darbības laiks: " + uptaims;
-}
 
 function uzstadiVaardu(jaunaisVards) {
   let vecaisVards = vards;
@@ -210,6 +234,7 @@ var ievadesLauks = document.getElementById("zinja");
 // Gaida signālu no klaviatūras, ka ir nospiests Enter taustiņš
 ievadesLauks.addEventListener("keyup", function(event) {
   // Numur 13 ir "Enter" taustiņš
+  //console.log(event.key)
   if (event.keyCode === 13) {
     suutiZinju();
   }
