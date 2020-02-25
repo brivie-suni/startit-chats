@@ -75,7 +75,16 @@ class Zinja {
       teksts = this.laiks + "~" + this.vards + "->" + this.adresats + ": " + this.zinja;
       newDiv.className = newDivclassName + " privata-zinja";
     }
-    let newContent = document.createTextNode(teksts); 
+    let newContent = "";
+    /*Izveido image tagu, ja tajā ir links
+    */
+    if (this.zinja.startsWith("http")){
+      newContent = document.createElement("img");
+      newContent.src = this.zinja;
+    
+    } else {
+      newContent = document.createTextNode(teksts);  
+    }
     newLI.appendChild(newDiv); 
     newDiv.appendChild(newContent); 
     return newLI;
@@ -158,6 +167,9 @@ function saprotiKomandu(ievades_teksts) {
     case "/versija":
     case "/v":
       chata_rinda.zinja = "Javascript versija: " + VERSIJA;
+      break;
+    case "/suns":
+      chata_rinda.zinja = "http://place-puppy.com/400x200";
       break;
     case "/vau":
     case "/msg":
