@@ -75,7 +75,16 @@ class Zinja {
       teksts = this.laiks + "~" + this.vards + "->" + this.adresats + ": " + this.zinja;
       newDiv.className = newDivclassName + " privata-zinja";
     }
-    let newContent = document.createTextNode(teksts); 
+    let newContent = "";
+    /*Izveido image tagu, ja tajā ir links
+    */
+    if (this.zinja.startsWith("http")){
+      newContent = document.createElement("img");
+      newContent.src = this.zinja;
+    
+    } else {
+      newContent = document.createTextNode(teksts);  
+    }
     newLI.appendChild(newDiv); 
     newDiv.appendChild(newContent); 
     return newLI;
@@ -152,9 +161,15 @@ function saprotiKomandu(ievades_teksts) {
         chata_rinda.zinja = uzstadiVaardu(ievades_vardi[1]);
       }
       break;
+    case "/uptime":
+      servera_uptime();
+      break;
     case "/versija":
     case "/v":
       chata_rinda.zinja = "Javascript versija: " + VERSIJA;
+      break;
+    case "/suns":
+      chata_rinda.zinja = "http://place-puppy.com/200x200";
       break;
     case "/vau":
     case "/msg":
@@ -179,6 +194,12 @@ function saprotiKomandu(ievades_teksts) {
   return chata_rinda;
 }
 
+async function servera_uptime() {
+  const atbilde = await fetch('/uptime');
+  uptaims = await atbilde.text();
+  var uptimeLauks = document.getElementById("uptime");
+  uptimeLauks.innerHTML = "Servera darbības laiks: " + uptaims;
+}
 
 function uzstadiVaardu(jaunaisVards) {
   let vecaisVards = vards;

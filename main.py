@@ -1,5 +1,6 @@
 from flask import Flask, json, jsonify, render_template, request
 import chats
+from uptime import uptime
 
 
 app = Flask('app')
@@ -13,6 +14,11 @@ def index_lapa():
 @app.route('/health')
 def health_check():
   return "OK"
+
+@app.route('/uptime')
+def uptime_check():
+  laiks=uptime()
+  return str(laiks)
 
 
 @app.route('/chats/lasi/<adresats>')

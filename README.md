@@ -32,15 +32,15 @@ Ir aplūkojama [prezentācija](https://gitpitch.com/startitfonds/startit-chats)
 
 ## Funkcionalitātes idejas
 
-- [ ] lasīt ziņas
-- [ ] sūtīt ziņu kā *Viesis*
-- [ ] /vards *jauns_vards* - mainīt vārdu
-- [ ] redzēt sūtītāja vārdu visām ziņām
-- [ ] redzēt sūtīšanas laiku visām ziņām
-- [ ] /palidziba - izdrukā visas pieejamās komandas
-- [ ] /versija - rāda čata versiju
+- [x] lasīt ziņas
+- [x] sūtīt ziņu kā *Viesis*
+- [x] /vards *jauns_vards* - mainīt vārdu
+- [x] redzēt sūtītāja vārdu visām ziņām
+- [x] redzēt sūtīšanas laiku visām ziņām
+- [x] /palidziba - izdrukā visas pieejamās komandas
+- [x] /versija - rāda čata versiju
 - [ ] /ping - parāda *latency* uz serveri
-- [ ] /uptime - cik ilgi serveris strādā
+- [x] /uptime - cik ilgi serveris strādā
 - [ ] /stats - kaut kāda statistika par ziņām/dalībniekiem
 - [ ] /joks - ģenerē joku no ārēja / iekšēja resursa
 - [ ] /joks2 - ģenerē joku no API
@@ -51,7 +51,7 @@ Ir aplūkojama [prezentācija](https://gitpitch.com/startitfonds/startit-chats)
 - [ ] /auu - sūta uzmanību pievērsošu ziņu
 - [ ] /bilde *link* - parāda attēlu no linka
 - [ ] /mute /ignore /limit - prespama aizsardzība
-- [ ] Limitēt ziņas garumu uz 280 simboliem
+- [x] Limitēt ziņas garumu uz 140 simboliem
 - [ ] limitēt *Viesu* sūtito ziņu biežumu
 - [ ] skaņas efekts pie jaunas ziņas
 

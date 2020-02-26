@@ -1,0 +1,6 @@
+{"adresats": "visi", "laiks": "2020/02/19, 21:30:16", "vards": "Viesis", "zinja": "zzz"}
+{"adresats": "visi", "laiks": "2020/02/19, 21:30:21", "vards": "Viesis", "zinja": "\u0146au"}
+{"adresats": "visi", "laiks": "2020/02/19, 21:31:00", "vards": "Viesis", "zinja": "nau nau"}
+{"adresats": "visi", "laiks": "2020/02/19, 21:32:25", "vards": "Viesis", "zinja": "zzz"}
+{"adresats": "visi", "laiks": "2020/02/19, 21:32:52", "vards": "Viesis", "zinja": "vau"}
+{"adresats": "visi", "laiks": "2020/02/19, 21:33:23", "vards": "Viesis", "zinja": "vau vau vau sunis"}
