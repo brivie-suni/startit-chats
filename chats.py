@@ -3,7 +3,6 @@ from datetime import datetime
 
 LOGFAILS = "chats.txt"
 
-
 def lasi(adresats):
     chata_rindas = []
     with open(LOGFAILS, "r", encoding="utf-8") as f:
@@ -15,16 +14,15 @@ def lasi(adresats):
 
     return jsonify({"chats": chata_rindas})
 
-
 LABAIS_VARDS = "vau"
 SLIKTIE_VARDI = ["ņau", "kaķis"]
-
 
 def pieraksti_zinju(dati):
     # limitējam ziņas garumu
     dati["chats"]["zinja"] = dati["chats"]["zinja"][0:140]
     now = datetime.now()
     laiks = now.strftime("%Y/%m/%d, %H:%M:%S")
+
     # Cenzūra
     chata_rindas = []
     zinjas_vardi = dati["chats"]["zinja"].split()
@@ -34,6 +32,7 @@ def pieraksti_zinju(dati):
         else:
             chata_rindas.append(vards)
     dati["chats"]["zinja"]=" ".join(chata_rindas)
+
     with open(LOGFAILS, "a", newline="", encoding="utf-8") as f:
         dati["chats"]["laiks"] = laiks
         f.write(json.dumps(dati["chats"]) + "\n")
