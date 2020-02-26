@@ -120,6 +120,7 @@ a:hover, a:active, a:focus {
 .privata-zinja {
   background-color: rgb(225,144,62);
   color: white;
+  font-weight: bold;
 }
 ul > li:nth-of-type(3n+1) {
   background: rgb(255,250,200);
