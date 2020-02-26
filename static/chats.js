@@ -169,7 +169,7 @@ function saprotiKomandu(ievades_teksts) {
       chata_rinda.zinja = "Javascript versija: " + VERSIJA;
       break;
     case "/suns":
-      chata_rinda.zinja = "http://place-puppy.com/400x200";
+      chata_rinda.zinja = "http://place-puppy.com/200x200";
       break;
     case "/vau":
     case "/msg":
