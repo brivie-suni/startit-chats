@@ -239,3 +239,5 @@ ievadesLauks.addEventListener("keyup", function(event) {
     suutiZinju();
   }
 });
+
+var s = " ";

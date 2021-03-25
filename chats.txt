@@ -1,0 +1,5 @@
+{"adresats": "visi", "laiks": "2021/03/26, 01:39:30", "vards": "Viesis", "zinja": "Pieejam\u0101s komandas : \"/vards JaunaisVards\", \"/palidziba\", \"/versija\""}
+{"adresats": "visi", "laiks": "2021/03/26, 01:39:43", "vards": "Viesis", "zinja": "Pieejam\u0101s komandas : \"/vards JaunaisVards\", \"/palidziba\", \"/versija\""}
+{"adresats": "visi", "laiks": "2021/03/26, 01:39:50", "vards": "Viesis", "zinja": "Viesis k\u013cuva par Dummy"}
+{"adresats": "visi", "laiks": "2021/03/26, 01:39:54", "vards": "Dummy", "zinja": "bzz"}
+{"adresats": "visi", "laiks": "2021/03/26, 01:39:58", "vards": "Dummy", "zinja": "http://place-puppy.com/400x200"}

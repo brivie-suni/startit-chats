@@ -121,3 +121,14 @@ a:hover, a:active, a:focus {
   background-color: aqua;
   color: red;
 }
+
+ul > li:nth-of-type(3n+2) {
+  background: greenyellow;
+}
+ul > li:nth-of-type(3n+1) {
+  background: magenta;
+}
+ul > li:nth-of-type(3n+0) {
+  background: red;
+}
+
